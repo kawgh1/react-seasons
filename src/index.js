@@ -1,17 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import SeasonDisplay from './SeasonDisplay';
+
+// functional based React Component
+
+// const App = () => {
+
+//     // call Geolocation API from inside the browser
+//     // this takes 3-4 seconds so we need to use React Classes instead of functions
+//     window.navigator.geolocation.getCurrentPosition(
+//         // success function callback
+//         (position) => console.log(position),
+//         (err) => console.log(err)
+//     );
+
+//     return <div>Hi there
+//         <SeasonDisplay></SeasonDisplay>
+//     </div>
+// }
+
+
+class App extends React.Component {
+
+    render() {
+        // call Geolocation API from inside the browser
+        // this takes 3-4 seconds so we need to use React Classes instead of functions
+        window.navigator.geolocation.getCurrentPosition(
+
+            // success function callback
+            (position) => console.log(position),
+            (err) => console.log(err)
+        );
+
+        return <div>Latitude:
+            <SeasonDisplay></SeasonDisplay></div>
+    }
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <App />,
+    document.querySelector('#root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
