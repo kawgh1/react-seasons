@@ -22,7 +22,7 @@ Seasons app
 3. 'State' is a JS Object that contains data strictly relevant to a singular Component
 4. Updating 'State' on a Component causes the Component to (almost) instantly re-render
 5. State must be initialized when a Component is first created
-6. State can **only** be updating using the function **'setState()'**
+6. State can **only** be updated using the function **'setState()'**
     - Trying to update State using regular JavaScript and not setState() is a very common mistake
     - Ex)
 
@@ -45,3 +45,29 @@ File: index.js
 
                     // Never ever ever do this below - a direct assignment to our State object
                     this.state.latitude = position.coords.latitude
+
+
+### Anytime you want to re-render a Component you call setState()
+
+### Conditional Rendering
+
+File: index.js
+
+    ...
+    render() {
+
+        // 3 possible states
+        // Error Message and No Latitude - show error message
+        // No Error Message and Latitude - show Latitude
+        // No Error Message and No Latitude - show loading...
+
+        if (this.state.errorMessage && !this.state.latitude) {
+            return <div>Error: {this.state.errorMessage}</div>
+        }
+
+        if (!this.state.errorMessage && this.state.latitude) {
+            return <div>Latitude: {this.state.latitude}</div>
+        }
+
+        return <div>Loading...</div>
+    }

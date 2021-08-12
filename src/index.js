@@ -26,7 +26,7 @@ class App extends React.Component {
     constructor(props) {
         super(props); // super(props) must be called everytime we write a Component constructor
 
-        this.state = { latitude: null };
+        this.state = { latitude: null, errorMessage: '' };
 
         // call Geolocation API from inside the browser
         // this takes 3-4 seconds so we need to use React Classes instead of functions
@@ -40,16 +40,29 @@ class App extends React.Component {
                 // Never ever ever do this below - a direct assignment to our State object
                 // this.state.latitude = position.coords.latitude
             },
-            (err) => console.log(err)
+            (err) => {
+                this.setState({ errorMessage: err.message });
+            }
         );
     }
 
     // React says we have to define render()!!
     render() {
 
+        // 3 possible states
+        // Error Message and No Latitude - show error message
+        // No Error Message and Latitude - show Latitude
+        // No Error Message and No Latitude - show loading...
 
-        return <div>Latitude: {this.state.latitude}
-            <SeasonDisplay></SeasonDisplay></div>
+        if (this.state.errorMessage && !this.state.latitude) {
+            return <div>Error: {this.state.errorMessage}</div>
+        }
+
+        if (!this.state.errorMessage && this.state.latitude) {
+            return <div>Latitude: {this.state.latitude}</div>
+        }
+
+        return <div>Loading...</div>
     }
 }
 
