@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import SeasonDisplay from './SeasonDisplay';
+import Spinner from './Spinner';
 
 // functional based React Component
 
@@ -23,10 +24,19 @@ import SeasonDisplay from './SeasonDisplay';
 class App extends React.Component {
     // before any Component is created, its constructor() method is called
     // thus, it's a great place to initialize State for that Component
-    constructor(props) {
-        super(props); // super(props) must be called everytime we write a Component constructor
+    // constructor(props) {
+    //     super(props); // super(props) must be called everytime we write a Component constructor
 
-        this.state = { latitude: null, errorMessage: '' };
+    //     this.state = { latitude: null, errorMessage: '' };
+
+
+    // }
+
+    // alternate (and most common) way to initialize state
+    state = { latitude: null, errorMessage: '' };
+
+    componentDidMount() {
+        console.log('My component was rendered to the screen')
 
         // call Geolocation API from inside the browser
         // this takes 3-4 seconds so we need to use React Classes instead of functions
@@ -46,9 +56,12 @@ class App extends React.Component {
         );
     }
 
-    // React says we have to define render()!!
-    render() {
+    componentDidUpdate() {
+        console.log("my component just updated - it already rendered!")
+    }
 
+    // helper method
+    renderContent() {
         // 3 possible states
         // Error Message and No Latitude - show error message
         // No Error Message and Latitude - show Latitude
@@ -59,11 +72,29 @@ class App extends React.Component {
         }
 
         if (!this.state.errorMessage && this.state.latitude) {
-            return <div>Latitude: {this.state.latitude}</div>
+            // return <div>Latitude: {this.state.latitude}</div>
+            // yes we can take a State variable from a parent Component and pass it down as a prop to a child Component
+            return <SeasonDisplay lat={this.state.latitude} />
         }
 
-        return <div>Loading...</div>
+        return <Spinner message="Please accept location request" />
     }
+
+    // React says we have to define render()!!
+    render() {
+
+        return (
+            <div className="border red">
+                {this.renderContent()}
+            </div>
+        )
+
+
+    }
+}
+
+Spinner.defaultProps = {
+    message: 'Loading...'
 }
 
 ReactDOM.render(
