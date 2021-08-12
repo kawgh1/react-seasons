@@ -27,6 +27,7 @@ Seasons app
     - Ex)
 
 File: index.js
+
     class App extends Component {
 
         constructor(props) {
