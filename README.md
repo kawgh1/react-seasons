@@ -71,3 +71,14 @@ File: index.js
 
         return <div>Loading...</div>
     }
+
+## Component LifeCycle
+
+1. constructor()
+2. render()
+- *content visible on screen*
+3. componentDidMount
+- *sit and wait for updates...*
+4. componentDidUpdate
+- *sit and wait until this component is no longer shown*
+5. componentWillUnmount
