@@ -19,7 +19,28 @@ Seasons app
 1. Only useable with **Class Components**
    - technically can be used with functional components using the 'Hooks' system
 2. You will confuse 'props' with State : (
-3. 'State' is a JS Object that contains data relevant to a Component
+3. 'State' is a JS Object that contains data strictly relevant to a singular Component
 4. Updating 'State' on a Component causes the Component to (almost) instantly re-render
-5. State must be initialized when a Component is created
+5. State must be initialized when a Component is first created
 6. State can **only** be updating using the function **'setState()'**
+    - Trying to update State using regular JavaScript and not setState() is a very common mistake
+    - Ex)
+
+File: index.js
+    class App extends Component {
+
+        constructor(props) {
+            super(props);
+
+            this.state = { latitude: null };
+
+            // call Geolocation API from inside the browser
+            window.navigator.geolocation.getCurrentPosition(
+
+                // success function callback
+                (position) => {
+                    // to update State, we call setState - we dont try to change the latitude variable
+                    this.setState({ latitude: position.coords.latitude });
+
+                    // Never ever ever do this below - a direct assignment to our State object
+                    this.state.latitude = position.coords.latitude
